@@ -1,0 +1,32 @@
+{
+  "$schema": "https://raw.githubusercontent.com/oxc-project/oxc/refs/heads/main/crates/oxc_linter/configuration_schema.json",
+  "plugins": ["typescript", "import"],
+  "categories": {
+    "correctness": "off"
+  },
+  "ignorePatterns": [
+    "**/.turbo",
+    "**/node_modules",
+    "**/dist",
+    "**/.next",
+    "**/*.config.*"
+  ],
+  "rules": {
+    "no-unused-vars": [
+      "error",
+      {
+        "argsIgnorePattern": "^_",
+        "varsIgnorePattern": "^_"
+      }
+    ],
+    "no-var": "error",
+    "@typescript-eslint/no-explicit-any": "error",
+    "@typescript-eslint/consistent-type-imports": [
+      "warn",
+      {
+        "prefer": "type-imports",
+        "fixStyle": "separate-type-imports"
+      }
+    ]
+  }
+}

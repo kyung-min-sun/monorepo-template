@@ -1,0 +1,10 @@
+{
+  "name": "@project-template/typescript-config",
+  "version": "1.0.0",
+  "type": "module",
+  "private": true,
+  "packageManager": "bun@1.3.0",
+  "exports": {
+    "./base": "./base.json"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "name": "@project-template/oxlint-config",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "bun@1.3.0",
+  "exports": {
+    "./base": "./oxlintrc.base.json",
+    ".": "./oxlintrc.base.json"
+  },
+  "devDependencies": {
+    "@project-template/typescript-config": "workspace:*",
+    "oxlint": "catalog:"
+  }
+}

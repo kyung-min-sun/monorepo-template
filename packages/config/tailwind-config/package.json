@@ -1,0 +1,15 @@
+{
+  "name": "@project-template/tailwind-config",
+  "version": "1.0.0",
+  "type": "module",
+  "private": true,
+  "packageManager": "bun@1.3.0",
+  "devDependencies": {
+    "@project-template/typescript-config": "workspace:*",
+    "tailwindcss": "catalog:frontend",
+    "tailwindcss-animate": "catalog:frontend"
+  },
+  "exports": {
+    ".": "./tailwind.config.ts"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "extends": "@project-template/typescript-config/base",
+  "compilerOptions": {
+    "rootDir": ".",
+    "paths": {
+      "~/*": ["./src/*"]
+    },
+    "noEmit": true,
+    "plugins": [{ "name": "next" }]
+  },
+  "include": ["src", ".next/types/**/*.ts"]
+}
