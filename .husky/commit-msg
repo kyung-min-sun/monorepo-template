@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+
+set -e
+# Run commitlint first
+bunx --no -- commitlint --edit "$1"
+
+# Extract the first line of the commit message (the subject)
+commit_msg=$(head -n 1 "$1")
+
+# Extract scope from conventional commit format: type(scope): message
+# Match pattern like "feat(api):", "fix(ui)!:" (breaking change)
+pattern='^[a-z]+\(([^)]+)\)!?:'
+if [[ $commit_msg =~ $pattern ]]; then
+  scope="${BASH_REMATCH[1]}"
+
+  # Find all package.json files in apps/ and packages/ (excluding node_modules and .next)
+  # Extract the package name and get the scope (part after @project-template/)
+  valid_scopes=$(find apps packages -name "package.json" \
+    -not -path "*/node_modules/*" \
+    -not -path "*/.next/*" \
+    -exec grep -h '"name"' {} \; 2>/dev/null | \
+    sed -n 's/.*"name": *"@project-template\/\([^"]*\)".*/\1/p' | \
+    sort -u)
+
+  # Check if the scope is valid
+  if ! echo "$valid_scopes" | grep -qx "$scope"; then
+    echo ""
+    echo "❌ Invalid commit scope: '$scope'"
+    echo ""
+    echo "Valid scopes (package names):"
+    echo "$valid_scopes" | sed 's/^/  - /'
+    echo ""
+    exit 1
+  fi
+fi

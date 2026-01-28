@@ -1,8 +1,27 @@
+# Dependencies
 node_modules
+
+# Build outputs
 .next
 dist
 .turbo
+
+# Logs
 *.log
+
+# OS
 .DS_Store
+
+# Environment
 .env
 .env.local
+.env.*.local
+
+# IDE
+.idea
+*.swp
+*.swo
+
+# Prisma
+*.db
+*.db-journal

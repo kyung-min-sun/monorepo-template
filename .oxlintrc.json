@@ -1,0 +1,4 @@
+{
+  "$schema": "https://raw.githubusercontent.com/oxc-project/oxc/refs/heads/main/crates/oxc_linter/configuration_schema.json",
+  "extends": ["./packages/config/oxlint-config/oxlintrc.base.json"]
+}

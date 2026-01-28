@@ -1,0 +1,2 @@
+bun i --frozen-lockfile
+bun run typecheck

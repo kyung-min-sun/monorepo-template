@@ -1,0 +1,48 @@
+// Place your key bindings in this file to override the defaults
+[
+  {
+    "key": "cmd+,",
+    "command": "-workbench.action.openSettings"
+  },
+  {
+    "key": "ctrl+=",
+    "command": "workbench.action.terminal.focus"
+  },
+  {
+    "key": "ctrl+=",
+    "command": "workbench.action.focusActiveEditorGroup",
+    "when": "terminalFocus"
+  },
+  {
+    "key": "alt+tab",
+    "command": "workbench.action.quickSwitchWindow"
+  },
+  {
+    "key": "cmd+p",
+    "command": "-workbench.action.quickOpen"
+  },
+  {
+    "key": "enter",
+    "command": "search.action.openResult",
+    "when": "fileMatchOrMatchFocus && searchViewletVisible"
+  },
+  {
+    "key": "cmd+a",
+    "command": "explorer.newFile",
+    "when": "explorerViewletFocus"
+  },
+  {
+    "key": "ctrl+shift+g",
+    "command": "workbench.view.scm",
+    "when": "workbench.scm.active"
+  },
+  {
+    "key": "ctrl+shift+t",
+    "command": "terminal.focus"
+  },
+  {
+    "key": "cmd+backspace",
+    "command": "workbench.action.terminal.kill",
+    "when": "terminalFocus"
+  }
+]
