@@ -1,77 +1,38 @@
-import { Elysia, t } from "elysia";
-import { cors } from "@elysiajs/cors";
+import { APIServer } from "@project-template/api/server";
 
-interface Todo {
-  id: string;
-  text: string;
-  completed: boolean;
-  createdAt: Date;
-}
+import { browser } from "./clients/browser";
+import { db } from "./clients/db";
+import { storage } from "./clients/storage";
+import { env } from "./env";
 
-// In-memory store for todos
-const todos: Todo[] = [];
+/**
+ * API Server Entry Point
+ *
+ * This app demonstrates the "services in packages, hoisted to apps" pattern:
+ *
+ * 1. Service implementations live in packages/services/*
+ *    - @project-template/db (Prisma database client)
+ *    - @project-template/storage (Bun S3 client)
+ *    - @project-template/browser (Puppeteer client)
+ *    - @project-template/api (API router definitions)
+ *
+ * 2. Service clients are instantiated here with environment config
+ *
+ * 3. The APIServer from @project-template/api is initialized with services
+ *
+ * This separation allows:
+ * - Reusing service logic across multiple apps
+ * - Testing services independently
+ * - Clear dependency injection
+ * - Type-safe service contracts
+ */
+const server = APIServer.initialize({
+  services: { db, storage, browser },
+  env: {
+    NODE_ENV: env.NODE_ENV,
+    FRONTEND_URL: env.FRONTEND_URL,
+    API_URL: env.API_URL,
+  },
+}).listen(env.PORT);
 
-const app = new Elysia()
-  .use(cors())
-  .get("/", () => ({ message: "Todo API Server" }))
-  .get("/api/todos", () => todos)
-  .post(
-    "/api/todos",
-    ({ body }) => {
-      const todo: Todo = {
-        id: crypto.randomUUID(),
-        text: body.text,
-        completed: false,
-        createdAt: new Date(),
-      };
-      todos.push(todo);
-      return todo;
-    },
-    {
-      body: t.Object({
-        text: t.String(),
-      }),
-    }
-  )
-  .patch(
-    "/api/todos/:id",
-    ({ params, body }) => {
-      const todo = todos.find((t) => t.id === params.id);
-      if (!todo) {
-        throw new Error("Todo not found");
-      }
-      if (body.text !== undefined) todo.text = body.text;
-      if (body.completed !== undefined) todo.completed = body.completed;
-      return todo;
-    },
-    {
-      params: t.Object({
-        id: t.String(),
-      }),
-      body: t.Object({
-        text: t.Optional(t.String()),
-        completed: t.Optional(t.Boolean()),
-      }),
-    }
-  )
-  .delete(
-    "/api/todos/:id",
-    ({ params }) => {
-      const index = todos.findIndex((t) => t.id === params.id);
-      if (index === -1) {
-        throw new Error("Todo not found");
-      }
-      todos.splice(index, 1);
-      return { success: true };
-    },
-    {
-      params: t.Object({
-        id: t.String(),
-      }),
-    }
-  )
-  .listen(3001);
-
-console.log(
-  `API server running at http://${app.server?.hostname}:${app.server?.port}`
-);
+console.log(`API server running at http://${server.server?.hostname}:${server.server?.port}`);

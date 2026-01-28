@@ -1,0 +1,26 @@
+{
+  "name": "@project-template/server",
+  "type": "module",
+  "private": true,
+  "packageManager": "bun@1.3.0",
+  "scripts": {
+    "lint": "oxlint src",
+    "lint:fix": "oxlint --fix src",
+    "typecheck": "tsc --noEmit",
+    "format": "oxfmt src",
+    "format:check": "oxfmt --check src"
+  },
+  "dependencies": {
+    "elysia": "catalog:backend",
+    "@elysiajs/eden": "catalog:backend",
+    "@bogeychan/elysia-logger": "catalog:backend"
+  },
+  "devDependencies": {
+    "@project-template/oxlint-config": "workspace:*",
+    "@project-template/typescript-config": "workspace:*",
+    "@types/bun": "catalog:"
+  },
+  "exports": {
+    ".": "./src/index.ts"
+  }
+}

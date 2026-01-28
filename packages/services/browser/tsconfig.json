@@ -1,0 +1,9 @@
+{
+  "extends": "@project-template/typescript-config/base",
+  "compilerOptions": {
+    "paths": {
+      "~/*": ["./src/*"]
+    }
+  },
+  "include": ["src"]
+}
