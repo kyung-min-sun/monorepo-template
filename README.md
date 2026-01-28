@@ -28,19 +28,34 @@ project-template/
 ## Prerequisites
 
 - [Bun](https://bun.sh) v1.3.0+
-- PostgreSQL database
+- [Docker](https://docker.com) (for PostgreSQL)
 - S3-compatible storage (AWS S3, Cloudflare R2, MinIO, etc.)
 - Chrome/Chromium (for browser-server)
 
 ## Setup
 
-### 1. Install dependencies
+### 1. Start PostgreSQL
+
+```bash
+docker compose up -d
+```
+
+This starts PostgreSQL on `localhost:5432` with:
+- **User**: `postgres`
+- **Password**: `postgres`
+- **Database**: `project-template`
+
+To stop: `docker compose down`
+
+To stop and remove data: `docker compose down -v`
+
+### 2. Install dependencies
 
 ```bash
 bun install
 ```
 
-### 2. Configure environment variables
+### 3. Configure environment variables
 
 Create `.env` files for the backend apps:
 
@@ -85,7 +100,7 @@ BROWSER_EXECUTABLE_PATH=/Applications/Google Chrome.app/Contents/MacOS/Google Ch
 # BROWSER_WS_ENDPOINT=ws://localhost:3000
 ```
 
-### 3. Set up the database
+### 4. Set up the database
 
 ```bash
 # Generate Prisma client
@@ -98,7 +113,7 @@ bun run db:push
 bun run db:studio
 ```
 
-### 4. Run development servers
+### 5. Run development servers
 
 ```bash
 # Run all apps concurrently
